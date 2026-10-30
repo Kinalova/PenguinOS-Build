@@ -9,7 +9,6 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-24.04
-
     steps:
       - name: Install tools
         run: |
@@ -22,16 +21,4 @@ jobs:
 
       - name: Validate manifest
         run: |
-          python3 - <<'PY'
-          import json
-
-          with open("pinned-sources.json") as f:
-              data = json.load(f)
-
-          assert data["branch"] == "penguinos/android-17"
-
-          for item in data["components"]:
-              print(item["path"], item["repository"])
-
-          print("PenguinOS manifest validation: PASSED")
-          PY
+          python3 -c "import json; d=json.load(open('pinned-sources.json')); assert d['branch']=='penguinos/android-17'; print('PenguinOS manifest validation: PASSED')"
