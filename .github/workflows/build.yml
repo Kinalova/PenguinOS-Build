@@ -12,13 +12,13 @@ jobs:
 
     steps:
       - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y git curl python3
-
-      - name: Download PenguinOS manifest
         run: |
-          curl -fL \
-            https://raw.githubusercontent.com/GamerX65/android_manifest/main/pinned-sources.json \
-            -o pinned-sources.json
+          sudo apt-get update
+          sudo apt-get install -y git curl python3
+
+      - name: Download manifest
+        run: |
+          curl -fL https://raw.githubusercontent.com/GamerX65/android_manifest/main/pinned-sources.json -o pinned-sources.json
 
       - name: Validate manifest
         run: |
@@ -31,28 +31,7 @@ jobs:
           assert data["branch"] == "penguinos/android-17"
 
           for item in data["components"]:
-              print("Repository:", item["repository"])
-              print("Path:", item["path"])
-              print("Revision:", item["upstreamRevision"])
-              print()
+              print(item["path"], item["repository"])
 
           print("PenguinOS manifest validation: PASSED")
           PY
-
-3. Simpan
-
-1. Tekan Commit changes.
-2. Pastikan branch "main".
-3. Konfirmasi commit.
-
-4. Jalankan workflow
-
-Buka:
-
-"GitHub Actions PenguinOS-Build" (https://reference-url-citation.invalid/1)
-
-Pilih PenguinOS Source Audit → Run workflow.
-
-Workflow ini baru memeriksa manifest, belum membangun ROM.
-
-Kirim screenshot hasil Actions setelah dijalankan. Berikutnya kita siapkan pengambilan source dan evaluasi kemungkinan build menggunakan runner yang tersedia.
